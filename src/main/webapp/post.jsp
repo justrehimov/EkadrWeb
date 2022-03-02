@@ -54,11 +54,11 @@
         <span></span>
     </button>
     <ul class="navbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
 
-        <li><a href="./new-post.html">Add vacancy</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/login" style="<%=login%>">Login</a></li>
         <li>
             <div class="dropdown" style="<%=profile%>">
                 <a><i class="fas fa-user-circle"></i></a>

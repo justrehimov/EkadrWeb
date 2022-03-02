@@ -20,18 +20,29 @@ public class VertificationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer code = Integer.valueOf(req.getParameter("code"));
         HttpSession session = req.getSession();
+        String errormessage = "";
+        String code = req.getParameter("code");
+        Integer usercode = 0;
+        if(!code.isEmpty()){
+            usercode = Integer.valueOf(code);
+        }
+        else {
+            errormessage = "Code cannot be empty";
+            session.setAttribute("error",errormessage);
+            resp.sendRedirect("/vertification");
+        }
         Integer confirmcode = (Integer)session.getAttribute("code");
         String email = String.valueOf(session.getAttribute("email"));
-        if(code.compareTo(confirmcode) == 0){
+        if(usercode.compareTo(confirmcode) == 0){
+            session.removeAttribute("error");
             new CompanyOperationDaoImpl().confirmAccount(email);
             resp.sendRedirect("/login");
         }else {
-            System.out.println("error vertificate");
+            errormessage = "Confirm code is not true";
+            session.setAttribute("error",errormessage);
+            resp.sendRedirect("/vertification");
         }
-
-
     }
 }
 

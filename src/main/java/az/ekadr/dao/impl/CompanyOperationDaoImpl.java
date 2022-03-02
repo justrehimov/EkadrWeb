@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 public class CompanyOperationDaoImpl implements CompanyOperationDao {
     @Override
     public Long login(String email, String password) {
-        String sql = "SELECT ID FROM COMPANY WHERE LOWER(EMAIL) = LOWER(?) AND PASSWORD = ? AND ACTIVE = 1";
+        String sql = "SELECT ID FROM COMPANY WHERE LOWER(EMAIL) = LOWER(?) AND PASSWORD = ? AND ACTIVE = 1 AND VERIFIED = 1";
         try(Connection c = DbHelper.getConnection(); PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1,email);
             ps.setString(2,password);
@@ -29,7 +29,7 @@ public class CompanyOperationDaoImpl implements CompanyOperationDao {
 
     @Override
     public void confirmAccount(String email) {
-        String sql = "UPDATE COMPANY SET VERIFIED = 1 WHERE EMAIL = ?";
+        String sql = "UPDATE COMPANY SET VERIFIED = 1 WHERE LOWER(EMAIL) = LOWER(?)";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1,email);
             ps.executeUpdate();
@@ -41,7 +41,7 @@ public class CompanyOperationDaoImpl implements CompanyOperationDao {
 
     @Override
     public void changePassword(String password, String email) {
-        String sql = "UPDATE COMPANY SET PASSWORD = ? WHERE EMAIL = ?";
+        String sql = "UPDATE COMPANY SET PASSWORD = ? WHERE LOWER(EMAIL) = LOWER(?)";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1,password);
             ps.setString(2,email);
@@ -54,7 +54,7 @@ public class CompanyOperationDaoImpl implements CompanyOperationDao {
 
     @Override
     public Long existsCompany(String email) {
-        String sql = "SELECT ID FROM COMPANY WHERE EMAIL = ? AND ACTIVE = 1";
+        String sql = "SELECT ID FROM COMPANY WHERE LOWER(EMAIL) = LOWER(?) AND ACTIVE = 1";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1,email);
             ResultSet rs = ps.executeQuery();

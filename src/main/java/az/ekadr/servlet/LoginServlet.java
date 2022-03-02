@@ -21,23 +21,27 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        if(email != null & password != null){
+        String errormessage = "";
+        if(!email.isEmpty() & !password.isEmpty()){
             Long id = new CompanyOperationDaoImpl().login(email,password);
             if(id !=null){
-                HttpSession session = req.getSession();
                 CompanyDaoImpl companyDao = new CompanyDaoImpl();
                 session.setAttribute("company",companyDao.getCompanyById(id));
+                session.removeAttribute("error");
                 resp.sendRedirect("index.jsp");
             }
             else{
-                resp.getWriter().print("<script>alert(Email or password is invalid)</script>");
+                errormessage = "Email or password is invalid or not verified account";
+                session.setAttribute("error",errormessage);
                 resp.sendRedirect("/login");
             }
         }
         else{
-            resp.getWriter().print("<script>alert(Email or password is invalid)</script>");
+            errormessage = "Email or password cannot be empty";
+            session.setAttribute("error",errormessage);
             resp.sendRedirect("/login");
         }
 

@@ -22,30 +22,38 @@ public class SendCodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
-        if(email != null){
+        HttpSession session = req.getSession();
+        String errormessage = "";
+        if(!email.isEmpty()){
             CompanyOperationDaoImpl codi = new CompanyOperationDaoImpl();
             Long id = codi.existsCompany(email);
-            if(id != null & id>0){
+            if(id != null){
                 SendVertificationService svs = new SendVertificationService();
                 Random random = new Random();
                 int code = 100000 + random.nextInt(999999-100000);
-                HttpSession session = req.getSession();
                 session.setAttribute("code",code);
                 session.setAttribute("email",email);
                 boolean send = svs.sendVertificationMail(email,"Ekadr Vertification",code);
                 if(send){
+                    session.removeAttribute("error");
                     resp.sendRedirect("/forgotpassword");
                 }
                 else{
+                    errormessage = "Confirm code couldn't be sent";
+                    session.setAttribute("error",errormessage);
                     resp.sendRedirect("/sendcode");
                 }
             }
             else{
-                resp.getWriter().print("<script>alert(Invalid email)</script>");
+                errormessage = "Email not found";
+                session.setAttribute("error",errormessage);
+                resp.sendRedirect("/sendcode");
             }
         }
         else{
-            resp.getWriter().print("<script>alert(Email cannot be empty)</script>");
+            errormessage = "Email cannot be empty";
+            session.setAttribute("error",errormessage);
+            resp.sendRedirect("/sendcode");
         }
 
     }

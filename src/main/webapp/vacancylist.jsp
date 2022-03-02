@@ -20,8 +20,8 @@
     Float balance = 0F;
     String base64Encoded = "";
     if(company!=null) {
-        login = "display:none  !important;";
-        profile = "display:inline-block  !important;";
+        login = "display:none !important;";
+        profile = "display:inline-block !important;";
         Blob blob = company.getLogo();
         logo = blob.getBytes(1,(int)blob.length());
         byte[] encodeBase64 = Base64.getEncoder().encode(logo);
@@ -58,10 +58,10 @@
         <span></span>
     </button>
     <ul class="navbar-menu">
-        <li><a href="/index.html">Home</a></li>
+        <li><a href="/index">Home</a></li>
         <li><a href="/vacancies">Vacancies</a></li>
-        <li><a href="/new-post">Add vacancy</a></li>
-        <li><a href="/login" src="<%=login%>">Login</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/login" style="<%=login%>">Login</a></li>
         <li>
             <div class="dropdown" style="<%=profile%>">
                 <a><i class="fas fa-user-circle"></i></a>
@@ -85,10 +85,10 @@
 </nav>
 <div class="top-bar" id="topbar">
     <ul class="topbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./new-post.html">Add vacancy</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
     <div class="social-media-topbar">
         <div class="links">
@@ -150,7 +150,7 @@
             byte[] encodeBase64 = Base64.getEncoder().encode(logoarr);
             String vlogo = new String(encodeBase64, "UTF-8");
         %>
-        <a class="post" style="margin: 0.9rem 0rem !important;" href="post.jsp?postId=<%=v.getId()%>">
+        <a class="post" target="_blank" href="post.jsp?postId=<%=v.getId()%>">
             <img class="company-logo" src="data:image/*;base64,<%=vlogo%>">
             <div class="about-post">
                 <span><%=v.getVacancyName()%></span>

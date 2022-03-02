@@ -11,7 +11,7 @@ import java.util.Properties;
 public class SendVertificationService {
 
     class MailSender {
-        public void send(String to, String subject, String msg) {
+        public boolean send(String to, String subject, String msg) {
 
             Properties properties = PropertiesHelper.getProperties();
             // Recipient's email ID needs to be mentioned.
@@ -70,8 +70,10 @@ public class SendVertificationService {
 
                 // Send message
                 Transport.send(message);
+                return true;
             } catch (MessagingException mex) {
                 mex.printStackTrace();
+                return false;
             }
         }
 
@@ -79,8 +81,7 @@ public class SendVertificationService {
     public boolean sendVertificationMail(String to,String subject,int code){
         try{
             MailSender mailSender = new MailSender();
-            mailSender.send(to,subject,"Your vertification code: " + code);
-            return true;
+            return mailSender.send(to,subject,"Your vertification code: " + code);
         }
         catch (Exception ex){
             ex.printStackTrace();

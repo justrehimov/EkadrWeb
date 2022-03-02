@@ -102,7 +102,7 @@
 }
 .account-profile{
     display: flex;
-    height: 2rem;
+    height: 3rem;
     justify-content: center;
     align-items: center;
 }

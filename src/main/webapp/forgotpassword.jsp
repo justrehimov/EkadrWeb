@@ -1,5 +1,14 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String msg = "";
+    Object error = session.getAttribute("error");
+    if(error==null){
+        msg = "";
+    }
+    else{
+        msg = String.valueOf(error);
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +23,7 @@
     <link rel="stylesheet" media="screen and (max-width: 767px)" href="./mobile-css/generally.css">
     <link rel="stylesheet" media="screen and (min-width: 768px)" href="./desktop-css/login.css">
     <link rel="stylesheet" media="screen and (max-width: 767px)" href="./mobile-css/login.css">
-    <title>Vacancies 2022</title>
+    <title>Change password</title>
 </head>
 <body>
 <nav class="navbar" id="navbar">
@@ -26,9 +35,9 @@
         <span></span>
     </button>
     <ul class="navbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
 </nav>
 <div class="top-bar" id="topbar">
@@ -58,9 +67,12 @@
     <h1>Change password</h1>
     <form class="register-form" method="post" action="/forgotpassword">
         <div class="user-info">
-            <input class="input" name="code" type="text" placeholder="Code">
-            <input class="input" name="password" type="password" placeholder="New password">
-            <input class="input"  name="confirmpassword" type="password" placeholder="Confirm password">
+            <input class="input" onclick="clearerror()" name="code" type="text" placeholder="Code">
+            <input class="input" onclick="clearerror()" name="password" type="password" placeholder="New password">
+            <input class="input" onclick="clearerror()" name="confirmpassword" type="password" placeholder="Confirm password">
+            <div class="error-message">
+                <span class="error-txt" id="error"><%=msg%></span>
+            </div>
             <input class="input btn" type="submit" value="Change password">
         </div>
     </form>

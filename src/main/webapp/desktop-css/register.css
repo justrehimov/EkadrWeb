@@ -23,11 +23,11 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1rem;
+    padding: 0.8rem;
     border: 1px solid #0EBBDA;
     border-radius: 10px;
-    margin: 1rem;
-    font-size: 1.2rem;
+    margin: 0.8rem;
+    font-size: 1rem;
 }
 .wrapper{
   position: relative;
@@ -69,13 +69,31 @@
     resize: vertical;
     min-height: 5rem;
 }
-.btn{
+.error-message{
+    display: flex;
+    width: 90%;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    color: red !important;
+    font-size: 1.2rem;
+}
+.register-footer{
+    display: flex;
+    width: 100%;
+    height: auto;
+    padding: 0.5rem;
+    justify-content: space-around;
+    align-items: center;
+}
+btn{
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all .3s;
     float: right;
-    width: 10rem;
+    width: 12rem;
     background: white;
     color: #0EBBDA;
     border: 1px solid #0EBBDA;

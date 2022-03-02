@@ -25,9 +25,12 @@ function checkfile() {
             label.setAttribute("data-text","Logo selected");           
         }
     }
-  };
+  }
 
-
+function clearerror(){
+    let error =  document.getElementById("error");
+    error.textContent = "";
+}
 
   //Mobile
   var hamburgerbtn = document.getElementById('hamburgerbtn');
@@ -44,4 +47,4 @@ function checkfile() {
                 topbar.style.zIndex = "-2";
                 hamburgerbtn.setAttribute("value","close");
           } 
-  };
+  }

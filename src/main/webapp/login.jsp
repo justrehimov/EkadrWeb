@@ -1,4 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String msg = "";
+    Object error = session.getAttribute("error");
+    if(error==null){
+        msg = "";
+    }
+    else{
+        msg = String.valueOf(error);
+    }
+ %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,16 +67,16 @@
     <h1>Login page</h1>
     <form class="register-form" method="post" action="/login">
         <div class="user-info">
-            <input class="input" name="email" type="email" placeholder="Email">
-            <input class="input" name="password" type="password" placeholder="Password">
+            <input class="input" onchange="clearerror()" name="email" type="email" placeholder="Email">
+            <input class="input" onchange="clearerror()" name="password" type="password" placeholder="Password">
             <div class="texts">
                 <a href="/sendcode">Forgot password?</a>
             </div>
             <div class="error-message">
-                <span class="error-txt">Email</span>
+                <span class="error-txt" id="error"><%=msg%></span>
             </div>
             <input class="input btn" type="submit" value="Login">
-            <div class="texts"><label><span>You don't have any account?</span><a href="/register">Sign up</a></label></div>
+            <div class="texts"><label><span>Don't you have any account?</span><a href="/register">Sign up</a></label></div>
         </div>
     </form>
 </div>

@@ -1,4 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String msg = "";
+    Object error = session.getAttribute("error");
+    if(error==null){
+        msg = "";
+    }
+    else{
+        msg = String.valueOf(error);
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +23,7 @@
     <link rel="stylesheet" media="screen and (max-width: 767px)" href="./mobile-css/generally.css">
     <link rel="stylesheet" media="screen and (min-width: 768px)" href="./desktop-css/login.css">
     <link rel="stylesheet" media="screen and (max-width: 767px)" href="./mobile-css/login.css">
-    <title>Vacancies 2022</title>
+    <title>Forgot password</title>
 </head>
 <body>
 <nav class="navbar" id="navbar">
@@ -32,7 +42,7 @@
 </nav>
 <div class="top-bar" id="topbar">
     <ul class="topbar-menu">
-        <li><a href="index.jsp">Home</a></li>
+        <li><a href="/index">Home</a></li>
         <li><a href="/vacancies">Vacancies</a></li>
         <li><a href="/login">Login</a></li>
     </ul>
@@ -57,7 +67,10 @@
     <h1>Send Vertification Code</h1>
     <form class="register-form" method="post" action="/sendcode">
         <div class="user-info">
-            <input class="input" name="email" type="email" placeholder="Email">
+            <input class="input" name="email" onclick="clearerror()" type="email" placeholder="Email">
+            <div class="error-message">
+                <span class="error-txt" id="error"><%=msg%></span>
+            </div>
             <input class="input btn" type="submit" value="Send code">
         </div>
     </form>
