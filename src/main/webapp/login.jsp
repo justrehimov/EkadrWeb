@@ -32,9 +32,9 @@
 </nav>
 <div class="top-bar" id="topbar">
     <ul class="topbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacanciess">Vacancies</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
     <div class="social-media-topbar">
         <div class="links">
@@ -59,9 +59,14 @@
         <div class="user-info">
             <input class="input" name="email" type="email" placeholder="Email">
             <input class="input" name="password" type="password" placeholder="Password">
-            <div><a href="/sendcode">Forgot password?</a></div>
+            <div class="texts">
+                <a href="/sendcode">Forgot password?</a>
+            </div>
+            <div class="error-message">
+                <span class="error-txt">Email</span>
+            </div>
             <input class="input btn" type="submit" value="Login">
-            <div><label><span>You don't have any account?</span><a href="/register">Sign up</a></label></div>
+            <div class="texts"><label><span>You don't have any account?</span><a href="/register">Sign up</a></label></div>
         </div>
     </form>
 </div>

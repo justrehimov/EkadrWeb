@@ -20,21 +20,31 @@
     width: 100%;
     height: auto;
 }
-.user-info div{
+.texts{
     display: flex;
-    justify-content: flex-end;
     width: 90%;
     height: 2rem;
     align-items: center;
+    justify-content: flex-end;
     padding: 1rem;
     border: none;
     border-radius: 10px;
     margin: 0.2rem;
     font-size: 1.2rem;
 }
-.user-info div:nth-child(5){
+.texts:nth-last-child(1){
     justify-content: flex-start !important;
-    margin: 1rem 0;
+}
+.error-message{
+    display: flex;
+    width: 90%;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 0.3rem 0 0.5rem;
+    margin-top: 1.4rem;
+    color: red !important;
+    font-size: 1.1rem;
 }
 .user-info{
     width: 50%;

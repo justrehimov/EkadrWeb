@@ -149,7 +149,6 @@
             byte[] logoarr = blob.getBytes(1,(int)blob.length());
             byte[] encodeBase64 = Base64.getEncoder().encode(logoarr);
             String vlogo = new String(encodeBase64, "UTF-8");
-
         %>
         <a class="post" style="margin: 0.9rem 0rem !important;" href="post.jsp?postId=<%=v.getId()%>">
             <img class="company-logo" src="data:image/*;base64,<%=vlogo%>">
