@@ -83,7 +83,7 @@ public class VacancyDaoImpl implements VacancyDao {
     @Override
     public List<Vacancy> getVacancyByName(String vacancyName) {
         List<Vacancy> vacancyList = new ArrayList<>();
-        String sql = "SELECT * FROM VACANCY WHERE ACTIVE = 1 AND VACANCY_NAME LIKE = ?";
+        String sql = "SELECT * FROM VACANCY WHERE ACTIVE = 1 AND VACANCY_NAME LIKE ?";
         try(Connection c = DbHelper.getConnection(); PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1,"%" + vacancyName + "%");
             ResultSet rs = ps.executeQuery();
@@ -114,16 +114,21 @@ public class VacancyDaoImpl implements VacancyDao {
         }
     }
 
+
     @Override
-    public List<Vacancy> searchVacancyByIds(Long categoryId, Long experienceId, Long cityId, Long workmodeId,String name) {
+    public List<Vacancy> searchVacancyByIdAndName(Long categoryId, Long experienceId, Long companyId, Long workmodeId,String name) {
         List<Vacancy> vacancyList = new ArrayList<>();
-        String sql = "SELECT * FROM VACANCY WHERE ACTIVE = 1 AND (CATEGORY_ID = ? OR EXPERIENCE_ID = ? OR CITY_ID = ? OR WORKMODE_ID = ? OR NAME LIKE = ?";
+        String sql = "SELECT * FROM VACANCY WHERE ACTIVE = 1 AND ((COMPANY_ID = ? OR EXPERIENCE_ID = ? OR" +
+                " CATEGORY_ID = ? OR WORKMODE_ID = ?) AND (LOWER(VACANCY_NAME) LIKE LOWER(?)" +
+                " OR LOWER(REQUIREMENTS) LIKE LOWER(?)))";
+
         try(Connection c = DbHelper.getConnection(); PreparedStatement ps = c.prepareStatement(sql)){
-            ps.setLong(1,categoryId);
+            ps.setLong(1,companyId);
             ps.setLong(2,experienceId);
-            ps.setLong(3,cityId);
+            ps.setLong(3,categoryId);
             ps.setLong(4,workmodeId);
             ps.setString(5,"%" + name + "%");
+            ps.setString(6,"%" + name + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 Vacancy vacancy = new Vacancy();
@@ -247,6 +252,79 @@ public class VacancyDaoImpl implements VacancyDao {
         }
         catch (Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Vacancy> getVacanciesByCategoryId(Long companyId) {
+        List<Vacancy> vacancyList = new ArrayList<>();
+        String sql = "SELECT * FROM VACANCY WHERE ACTIVE = 1 AND CATEGORY_ID = ?";
+        try(Connection c = DbHelper.getConnection(); PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setLong(1,companyId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Vacancy vacancy = new Vacancy();
+                vacancy.setId(rs.getLong("ID"));
+                vacancy.setVacancyName(rs.getString("VACANCY_NAME"));
+                vacancy.setInformation(rs.getString("INFORMATION"));
+                vacancy.setRequirements(rs.getString("REQUIREMENTS"));
+                vacancy.setAddress(rs.getString("ADDRESS"));
+                vacancy.setAgeId(new AgeDaoImpl().getAgeById(rs.getLong("AGE_ID")));
+                vacancy.setCategoryId(new CategoryDaoImpl().getCategoryById(rs.getLong("CATEGORY_ID")));
+                vacancy.setCompanyId(new CompanyDaoImpl().getCompanyById(rs.getLong("COMPANY_ID")));
+                vacancy.setExpDate(rs.getDate("EXP_DATE"));
+                vacancy.setEducationId(new EducationDaoImpl().getEducationById(rs.getLong("EDUCATION_ID")));
+                vacancy.setActive(rs.getInt("ACTIVE"));
+                vacancy.setDataDate(rs.getDate("DATA_DATE"));
+                vacancy.setSalary(rs.getString("SALARY"));
+                vacancy.setWorkmodeId(new WorkmodeDaoImpl().getWorkmodeById(rs.getLong("WORKMODE_ID")));
+                vacancy.setExperienceId(new ExperienceDaoImpl().getExperienceById(rs.getLong("EXPERIENCE_ID")));
+                vacancyList.add(vacancy);
+            }
+            return vacancyList;
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Vacancy> getVacanciesByIds(Long categoryId, Long companyId, Long experienceId, Long workmodeId) {
+        List<Vacancy> vacancyList = new ArrayList<>();
+        String sql = "SELECT * FROM VACANCY WHERE ACTIVE = 1 AND (COMPANY_ID = ? OR EXPERIENCE_ID = ? OR" +
+                " CATEGORY_ID = ? OR WORKMODE_ID = ?)";
+
+        try(Connection c = DbHelper.getConnection(); PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setLong(1,companyId);
+            ps.setLong(2,experienceId);
+            ps.setLong(3,categoryId);
+            ps.setLong(4,workmodeId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Vacancy vacancy = new Vacancy();
+                vacancy.setId(rs.getLong("ID"));
+                vacancy.setVacancyName(rs.getString("VACANCY_NAME"));
+                vacancy.setInformation(rs.getString("INFORMATION"));
+                vacancy.setRequirements(rs.getString("REQUIREMENTS"));
+                vacancy.setAddress(rs.getString("ADDRESS"));
+                vacancy.setAgeId(new AgeDaoImpl().getAgeById(rs.getLong("AGE_ID")));
+                vacancy.setCategoryId(new CategoryDaoImpl().getCategoryById(rs.getLong("CATEGORY_ID")));
+                vacancy.setCompanyId(new CompanyDaoImpl().getCompanyById(rs.getLong("COMPANY_ID")));
+                vacancy.setExpDate(rs.getDate("EXP_DATE"));
+                vacancy.setEducationId(new EducationDaoImpl().getEducationById(rs.getLong("EDUCATION_ID")));
+                vacancy.setActive(rs.getInt("ACTIVE"));
+                vacancy.setDataDate(rs.getDate("DATA_DATE"));
+                vacancy.setSalary(rs.getString("SALARY"));
+                vacancy.setWorkmodeId(new WorkmodeDaoImpl().getWorkmodeById(rs.getLong("WORKMODE_ID")));
+                vacancy.setExperienceId(new ExperienceDaoImpl().getExperienceById(rs.getLong("EXPERIENCE_ID")));
+                vacancyList.add(vacancy);
+            }
+            return vacancyList;
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return null;
         }
     }
 }

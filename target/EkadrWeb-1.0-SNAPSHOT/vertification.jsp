@@ -1,4 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage = "error.jsp" %>
+<%
+    String msg = "";
+    Object error = session.getAttribute("error");
+    if(error==null){
+        msg = "";
+    }
+    else{
+        msg = String.valueOf(error);
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,16 +36,16 @@
         <span></span>
     </button>
     <ul class="navbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
 </nav>
 <div class="top-bar" id="topbar">
     <ul class="topbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
     <div class="social-media-topbar">
         <div class="links">
@@ -57,7 +68,10 @@
     <h1>Confirm Code</h1>
     <form class="register-form" method="post" action="/vertification">
         <div class="user-info">
-            <input class="input" name="code" type="text" placeholder="Code">
+            <input class="input" onclick="clearerror()" name="code" type="text" placeholder="Code">
+            <div class="error-message">
+                <span class="error-txt" id="error"><%=msg%></span>
+            </div>
             <input class="input btn" type="submit" value="Confirm">
         </div>
     </form>

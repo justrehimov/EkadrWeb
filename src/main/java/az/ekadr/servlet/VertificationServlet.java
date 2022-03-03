@@ -36,6 +36,7 @@ public class VertificationServlet extends HttpServlet {
         String email = String.valueOf(session.getAttribute("email"));
         if(usercode.compareTo(confirmcode) == 0){
             session.removeAttribute("error");
+            session.removeAttribute("code");
             new CompanyOperationDaoImpl().confirmAccount(email);
             resp.sendRedirect("/login");
         }else {

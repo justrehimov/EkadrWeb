@@ -25,9 +25,12 @@ function checkfile() {
             label.setAttribute("data-text","Logo selected");           
         }
     }
-  };
+  }
 
-
+function clearerror(){
+    let error =  document.getElementById("error");
+    error.textContent = "";
+}
 
   //Mobile
   var hamburgerbtn = document.getElementById('hamburgerbtn');
@@ -44,4 +47,17 @@ function checkfile() {
                 topbar.style.zIndex = "-2";
                 hamburgerbtn.setAttribute("value","close");
           } 
-  };
+  }
+
+  //close warning message
+function closewarning(){
+    let warning = document.getElementById("close");
+    warning.parentElement.remove();
+}
+//get editor data
+function setEditorsData(editor1,editor2,id1,id2){
+    var information = document.getElementById(id1);
+    var requirements = document.getElementById(id2);
+    information.value = editor1.getData();
+    requirements.value = editor2.getData();
+}

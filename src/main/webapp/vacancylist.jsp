@@ -1,17 +1,30 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Base64" %>
+<%@ page errorPage = "error.jsp" %>
 <%@ page import="java.sql.Blob" %>
 <%@ page import="java.util.List" %>
 <%@ page import="az.ekadr.entites.*" %>
 <%@ page import="az.ekadr.dao.impl.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+   String category = request.getParameter("categoryId");
+    if(category!=null){
+        if(!category.isEmpty()){
+            VacancyDaoImpl vdi = new VacancyDaoImpl();
+            List<Vacancy> vacancyList = vdi.getVacanciesByCategoryId(Long.valueOf(category));
+            session.setAttribute("vacancy",vacancyList);
+        }
+    }
     Company company = (Company) session.getAttribute("company");
     List<Category> categoryList = new CategoryDaoImpl().getAllCategory();
-    List<City> cityList = new CityDaoImpl().getAllCity();
+    List<Company> companyList = new CompanyDaoImpl().getAllCompany();
     List<Experience> experienceList = new ExperienceDaoImpl().getAllExperience();
     List<Workmode> workmodeList = new WorkmodeDaoImpl().getAllWorkmode();
-    List<Vacancy> vacancyList  = new VacancyDaoImpl().getAllVacancy();
+    List<Vacancy> vacancyList = (List<Vacancy>) session.getAttribute("vacancy");
+    session.removeAttribute("vacancy");
+    if(vacancyList==null){
+        vacancyList = new VacancyDaoImpl().getAllVacancy();
+    }
     String login = "display:inline !important;";
     String profile = "display:none !important;";
     byte[] logo = null;
@@ -108,36 +121,36 @@
     </div>
 </div>
 <div class="content">
-    <form class="search-form">
-        <select class = "custom-select" id = "inputCategory">
+    <form class="search-form" method="post" action="/vacancies">
+        <select class = "custom-select" name="category" id = "inputCategory">
             <option disabled selected> Category </option>
             <%for(Category c:categoryList){%>
             <option value = "<%=c.getId()%>"><%=c.getCategory()%></option>
             <%}%>
         </select>
 
-        <select class="custom-select" id="inputCity">
-            <option disabled selected>City</option>
-            <%for(City c:cityList){%>
-            <option value = "<%=c.getId()%>"><%=c.getCity()%></option>
+        <select class="custom-select" name="company" id="inputCity">
+            <option disabled selected>Company</option>
+            <%for(Company c:companyList){%>
+            <option value = "<%=c.getId()%>"><%=c.getCompanyName()%></option>
             <%}%>
         </select>
 
-        <select class="custom-select" id="inputWorkmode">
+        <select class="custom-select" name="workmode" id="inputWorkmode">
             <option disabled selected>Work mode</option>
             <%for(Workmode w:workmodeList){%>
             <option value = "<%=w.getId()%>"><%=w.getWorkmode()%></option>
             <%}%>
         </select>
 
-        <select class="custom-select" id="inputExperience">
+        <select class="custom-select" name="experience" id="inputExperience">
             <option disabled selected>Experience</option>
             <%for(Experience e:experienceList){%>
             <option value = "<%=e.getId()%>"><%=e.getExperience()%></option>
             <%}%>
         </select>
 
-        <input type="search" class="input-search" placeholder="Java developer...">
+        <input type="search" class="input-search" name="vacancyname" placeholder="Java developer...">
         <button type="submit" class="btn-submit"><i class="fas fa-search"></i></button>
     </form>
     <div class="vacancy-list">

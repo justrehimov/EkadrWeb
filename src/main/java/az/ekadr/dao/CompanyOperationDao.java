@@ -5,4 +5,5 @@ public interface CompanyOperationDao {
     public void confirmAccount(String email);
     public void changePassword(String password,String email);
     public Long existsCompany(String email);
+    public boolean withdrawBalance(Long companyId,Float amount);
 }

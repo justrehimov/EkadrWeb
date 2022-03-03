@@ -1,5 +1,6 @@
 <%@ page import="az.ekadr.entites.Company" %>
 <%@ page import="java.sql.Blob" %>
+<%@ page errorPage = "error.jsp" %>
 <%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%
@@ -110,19 +111,19 @@
         <div class="categories">
             <span class="cards">
                 <i class="fas fa-code"></i>
-                <a>Information technologies</a>
+                <a href="vacancylist.jsp?categoryId=1" >Information technologies</a>
             </span>
             <span class="cards">
                 <i class="fab fa-uikit"></i>
-                <a>Design and creativity</a>
+                <a href="vacancylist.jsp?categoryId=5">Design and creativity</a>
             </span>
             <span class="cards">
                 <i class="fas fa-stethoscope"></i>
-                <a>Medicine and pharmacy</a>
+                <a href="vacancylist.jsp?categoryId=3">Medicine and pharmacy</a>
             </span>
             <span class="cards">
                 <i class="fas fa-user-graduate"></i>
-                <a>Training and education</a>
+                <a href="vacancylist.jsp?categoryId=4">Training and education</a>
             </span>
         </div>
     </div>

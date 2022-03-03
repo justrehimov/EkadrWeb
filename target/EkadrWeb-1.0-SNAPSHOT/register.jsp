@@ -2,8 +2,17 @@
 <%@ page import="az.ekadr.entites.City" %>
 <%@ page import="az.ekadr.dao.impl.CityDaoImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage = "error.jsp" %>
 <%
     List<City> cityList = new CityDaoImpl().getAllCity();
+    String msg = "";
+    Object error = session.getAttribute("error");
+    if(error==null){
+        msg = "";
+    }
+    else{
+        msg = String.valueOf(error);
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,19 +40,19 @@
         <span></span>
     </button>
     <ul class="navbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./new-post.html">Add vacancy</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
 </nav>
 <div class="top-bar" id="topbar">
     <ul class="topbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./new-post.html">Add vacancy</a></li>
-        <li><a href="./register.html">Register</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
     <div class="social-media-topbar">
         <div class="links">
@@ -66,25 +75,30 @@
           <h1>Register page</h1>
           <form class="register-form" method="post" action="/register" enctype="multipart/form-data">
               <div class="user-info">
-                <input class="input" name="name" type="text" placeholder="Name">
-                <input class="input" name="surname" type="text" placeholder="Surname">
-                <input class="input" name="companyname" type="text" placeholder="Company name">
-                <input class="input" name="email" type="email" placeholder="Email">
-                <input class="input" name="phone" type="text" placeholder="Phone">
-                <select name="city" class="input" id="input">
-                    <option disabled selected>City</option>
+                <input class="input" onclick="clearerror()" name="name" type="text" placeholder="Name">
+                <input class="input" onclick="clearerror()"  name="surname" type="text" placeholder="Surname">
+                <input class="input" onclick="clearerror()"  name="companyname" type="text" placeholder="Company name">
+                <input class="input" onclick="clearerror()"  name="email" type="email" placeholder="Email">
+                <input class="input" onclick="clearerror()"  name="phone" type="tel" placeholder="Phone">
+                <select name="city" onclick="clearerror()"  class="input" id="input">
+                    <option value="0">City</option>
                     <%for(City c:cityList){%>
                     <option value="<%=c.getId()%>"><%=c.getCity()%></option>
                     <%}%>
                 </select>
-                <input class="input" name="website" type="url" placeholder="Website (Optional)">
-                <input class="input" name="password" type="password" minlength="8" placeholder="Password">
+                <input class="input" onclick="clearerror()"  name="website" type="url" placeholder="Website (Optional)">
+                <input class="input" onclick="clearerror()"  name="password" type="password" minlength="8" placeholder="Password">
                 <label for="upload" class="input wrapper" id="wrapper" data-text="Select logo">
-                    <input id="upload" name="logo" onchange="checkfile()" type="file" class="field" accept="image/*">
+                    <input id="upload" onclick="clearerror()"  name="logo" onchange="checkfile()" type="file" class="field" accept="image/*">
                 </label>
               </div>
-              <textarea class="text" name="about" placeholder="About the company" rows="10"></textarea>
-              <input class="input btn" name="registerbtn" type="submit" value="Register">
+              <textarea class="text" onclick="clearerror()"  name="about" placeholder="About the company" rows="5"></textarea>
+              <div class="register-footer">
+                  <div class="error-message">
+                      <span class="error-txt" id="error"><%=msg%></span>
+                  </div>
+                  <input class="input btn" name="registerbtn" type="submit" value="Register">
+              </div>
           </form>
     </div>
 

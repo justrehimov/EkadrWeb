@@ -54,7 +54,7 @@ public class CompanyOperationDaoImpl implements CompanyOperationDao {
 
     @Override
     public Long existsCompany(String email) {
-        String sql = "SELECT ID FROM COMPANY WHERE LOWER(EMAIL) = LOWER(?) AND ACTIVE = 1";
+        String sql = "SELECT ID FROM COMPANY WHERE LOWER(EMAIL) = LOWER(?) AND ACTIVE = 1 AND VERIFIED = 1";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1,email);
             ResultSet rs = ps.executeQuery();
@@ -67,5 +67,20 @@ public class CompanyOperationDaoImpl implements CompanyOperationDao {
             return null;
         }
         return null;
+    }
+
+    @Override
+    public boolean withdrawBalance(Long companyId, Float balance) {
+        String sql = "UPDATE COMPANY SET BALANCE = ? WHERE ID = ?";
+        try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql);){
+            ps.setFloat(1,balance);
+            ps.setLong(2,companyId);
+            ps.executeUpdate();
+            return true;
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

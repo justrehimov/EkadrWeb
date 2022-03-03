@@ -33,6 +33,7 @@ public class ForgotPasswordServlet extends HttpServlet {
                     CompanyOperationDaoImpl codi = new CompanyOperationDaoImpl();
                     codi.changePassword(password,email);
                     session.removeAttribute("error");
+                    session.removeAttribute("code");
                     resp.sendRedirect("/login");
                 }
                 else {

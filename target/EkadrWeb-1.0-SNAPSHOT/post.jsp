@@ -4,6 +4,7 @@
 <%@ page import="az.ekadr.dao.impl.VacancyDaoImpl" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage = "error.jsp" %>
 <%
     Company company = (Company) session.getAttribute("company");
     Long vacancyId = Long.valueOf(request.getParameter("postId"));
@@ -54,11 +55,11 @@
         <span></span>
     </button>
     <ul class="navbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
 
-        <li><a href="./new-post.html">Add vacancy</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/login" style="<%=login%>">Login</a></li>
         <li>
             <div class="dropdown" style="<%=profile%>">
                 <a><i class="fas fa-user-circle"></i></a>
@@ -130,11 +131,11 @@
     <div class="about-post">
         <div class="about information">
             <h2>About the vacancy</h2>
-            <span><%=v.getInformation()%></span>
+            <div class="info"><%=v.getInformation()%></div>
         </div>
         <div class="about requirements">
             <h2>Requirements</h2>
-            <span><%=v.getRequirements()%></span>
+            <div class="info"><%=v.getRequirements()%></div>
         </div>
     </div>
 </div>

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@WebServlet(name = "new_post",value = "/new_post")
+@WebServlet(name = "new_post", value = "/new_post")
 @MultipartConfig
 public class NewPostServlet extends HttpServlet {
 
@@ -24,10 +24,9 @@ public class NewPostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Company company = (Company) session.getAttribute("company");
-        if(company == null){
+        if (company == null) {
             resp.sendRedirect("/login");
-        }
-        else{
+        } else {
             resp.sendRedirect("new-post.jsp");
         }
     }
@@ -35,40 +34,70 @@ public class NewPostServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        String errormessage = "";
         String vacancyname = req.getParameter("vacancyname");
         String information = req.getParameter("information");
         String requirements = req.getParameter("requirements");
         Long category = Long.valueOf(req.getParameter("category"));
         Long workmode = Long.valueOf(req.getParameter("workmode"));
         Long age = Long.valueOf(req.getParameter("age"));
-        Long companyid = Long.valueOf(req.getParameter("companyid"));
+        String companyId = req.getParameter("companyid");
         String expdate = req.getParameter("expdate");
         Long experience = Long.valueOf(req.getParameter("experience"));
         Long education = Long.valueOf(req.getParameter("education"));
         String address = req.getParameter("address");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
         String salary = req.getParameter("salary");
-        Date exp = sdf.parse(expdate);
-        Vacancy vacancy = new Vacancy();
-        vacancy.setVacancyName(vacancyname);
-        vacancy.setInformation(information);
-        vacancy.setRequirements(requirements);
-        vacancy.setCategoryId(new CategoryDaoImpl().getCategoryById(category));
-        vacancy.setCompanyId(new CompanyDaoImpl().getCompanyById(companyid));
-        vacancy.setWorkmodeId(new WorkmodeDaoImpl().getWorkmodeById(workmode));
-        vacancy.setAgeId(new AgeDaoImpl().getAgeById(age));
-        vacancy.setExperienceId(new ExperienceDaoImpl().getExperienceById(experience));
-        vacancy.setEducationId(new EducationDaoImpl().getEducationById(education));
-        vacancy.setAddress(address);
-        vacancy.setExpDate(exp);
-        vacancy.setDataDate(new Date());
-        vacancy.setActive(1);
-        vacancy.setId(null);
-        vacancy.setSalary(salary);
-        VacancyDaoImpl vdi = new VacancyDaoImpl();
-        if(vacancy!=null){
-            vdi.addVacancy(vacancy);
-            resp.sendRedirect("/index");
+        if (!vacancyname.isEmpty() & !information.isEmpty() & !requirements.isEmpty() & category != 0 & workmode != 0
+                & age != 0 & companyId != null & !expdate.isEmpty() & experience != 0 & education != 0 & !address.isEmpty() & !salary.isEmpty())
+        {
+            Long company = Long.valueOf(companyId);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
+            CompanyDaoImpl cdi = new CompanyDaoImpl();
+            Company addcompany = cdi.getCompanyById(company);
+            Date exp = sdf.parse(expdate);
+            Vacancy vacancy = new Vacancy();
+            vacancy.setVacancyName(vacancyname);
+            vacancy.setInformation(information);
+            vacancy.setRequirements(requirements);
+            vacancy.setCategoryId(new CategoryDaoImpl().getCategoryById(category));
+            vacancy.setCompanyId(addcompany);
+            vacancy.setWorkmodeId(new WorkmodeDaoImpl().getWorkmodeById(workmode));
+            vacancy.setAgeId(new AgeDaoImpl().getAgeById(age));
+            vacancy.setExperienceId(new ExperienceDaoImpl().getExperienceById(experience));
+            vacancy.setEducationId(new EducationDaoImpl().getEducationById(education));
+            vacancy.setAddress(address);
+            vacancy.setExpDate(exp);
+            vacancy.setDataDate(new Date());
+            vacancy.setActive(1);
+            vacancy.setId(null);
+            vacancy.setSalary(salary);
+            VacancyDaoImpl vdi = new VacancyDaoImpl();
+            Float amount = 5F;
+            if (addcompany.getBalance().compareTo(amount) != -1) {
+                CompanyOperationDaoImpl codi = new CompanyOperationDaoImpl();
+                boolean success = codi.withdrawBalance(company,addcompany.getBalance()-amount);
+                if(success){
+                    session.setAttribute("company",cdi.getCompanyById(company));
+                    vdi.addVacancy(vacancy);
+                    resp.sendRedirect("/index");
+                }
+                else{
+                    errormessage = "Something went wrong";
+                    session.setAttribute("error",errormessage);
+                    resp.sendRedirect("/new_post");
+                }
+            }
+            else{
+                errormessage = "Insufficient balance";
+                session.setAttribute("error",errormessage);
+                resp.sendRedirect("/new_post");
+            }
+        }
+        else {
+            errormessage = "Data cannot be empty";
+            session.setAttribute("error",errormessage);
+            resp.sendRedirect("/new_post");
+        }
         }
     }
-}

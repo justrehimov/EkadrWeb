@@ -1,17 +1,30 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Base64" %>
+<%@ page errorPage = "error.jsp" %>
 <%@ page import="java.sql.Blob" %>
 <%@ page import="java.util.List" %>
 <%@ page import="az.ekadr.entites.*" %>
 <%@ page import="az.ekadr.dao.impl.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+   String category = request.getParameter("categoryId");
+    if(category!=null){
+        if(!category.isEmpty()){
+            VacancyDaoImpl vdi = new VacancyDaoImpl();
+            List<Vacancy> vacancyList = vdi.getVacanciesByCategoryId(Long.valueOf(category));
+            session.setAttribute("vacancy",vacancyList);
+        }
+    }
     Company company = (Company) session.getAttribute("company");
     List<Category> categoryList = new CategoryDaoImpl().getAllCategory();
-    List<City> cityList = new CityDaoImpl().getAllCity();
+    List<Company> companyList = new CompanyDaoImpl().getAllCompany();
     List<Experience> experienceList = new ExperienceDaoImpl().getAllExperience();
     List<Workmode> workmodeList = new WorkmodeDaoImpl().getAllWorkmode();
-    List<Vacancy> vacancyList  = new VacancyDaoImpl().getAllVacancy();
+    List<Vacancy> vacancyList = (List<Vacancy>) session.getAttribute("vacancy");
+    session.removeAttribute("vacancy");
+    if(vacancyList==null){
+        vacancyList = new VacancyDaoImpl().getAllVacancy();
+    }
     String login = "display:inline !important;";
     String profile = "display:none !important;";
     byte[] logo = null;
@@ -20,8 +33,8 @@
     Float balance = 0F;
     String base64Encoded = "";
     if(company!=null) {
-        login = "display:none  !important;";
-        profile = "display:inline-block  !important;";
+        login = "display:none !important;";
+        profile = "display:inline-block !important;";
         Blob blob = company.getLogo();
         logo = blob.getBytes(1,(int)blob.length());
         byte[] encodeBase64 = Base64.getEncoder().encode(logo);
@@ -58,10 +71,10 @@
         <span></span>
     </button>
     <ul class="navbar-menu">
-        <li><a href="/index.html">Home</a></li>
+        <li><a href="/index">Home</a></li>
         <li><a href="/vacancies">Vacancies</a></li>
-        <li><a href="/new-post">Add vacancy</a></li>
-        <li><a href="/login" src="<%=login%>">Login</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/login" style="<%=login%>">Login</a></li>
         <li>
             <div class="dropdown" style="<%=profile%>">
                 <a><i class="fas fa-user-circle"></i></a>
@@ -85,10 +98,10 @@
 </nav>
 <div class="top-bar" id="topbar">
     <ul class="topbar-menu">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./vacancylist.html">Vacancies</a></li>
-        <li><a href="./new-post.html">Add vacancy</a></li>
-        <li><a href="./login.html">Login</a></li>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/vacancies">Vacancies</a></li>
+        <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/login">Login</a></li>
     </ul>
     <div class="social-media-topbar">
         <div class="links">
@@ -108,36 +121,36 @@
     </div>
 </div>
 <div class="content">
-    <form class="search-form">
-        <select class = "custom-select" id = "inputCategory">
+    <form class="search-form" method="post" action="/vacancies">
+        <select class = "custom-select" name="category" id = "inputCategory">
             <option disabled selected> Category </option>
             <%for(Category c:categoryList){%>
             <option value = "<%=c.getId()%>"><%=c.getCategory()%></option>
             <%}%>
         </select>
 
-        <select class="custom-select" id="inputCity">
-            <option disabled selected>City</option>
-            <%for(City c:cityList){%>
-            <option value = "<%=c.getId()%>"><%=c.getCity()%></option>
+        <select class="custom-select" name="company" id="inputCity">
+            <option disabled selected>Company</option>
+            <%for(Company c:companyList){%>
+            <option value = "<%=c.getId()%>"><%=c.getCompanyName()%></option>
             <%}%>
         </select>
 
-        <select class="custom-select" id="inputWorkmode">
+        <select class="custom-select" name="workmode" id="inputWorkmode">
             <option disabled selected>Work mode</option>
             <%for(Workmode w:workmodeList){%>
             <option value = "<%=w.getId()%>"><%=w.getWorkmode()%></option>
             <%}%>
         </select>
 
-        <select class="custom-select" id="inputExperience">
+        <select class="custom-select" name="experience" id="inputExperience">
             <option disabled selected>Experience</option>
             <%for(Experience e:experienceList){%>
             <option value = "<%=e.getId()%>"><%=e.getExperience()%></option>
             <%}%>
         </select>
 
-        <input type="search" class="input-search" placeholder="Java developer...">
+        <input type="search" class="input-search" name="vacancyname" placeholder="Java developer...">
         <button type="submit" class="btn-submit"><i class="fas fa-search"></i></button>
     </form>
     <div class="vacancy-list">
@@ -150,7 +163,7 @@
             byte[] encodeBase64 = Base64.getEncoder().encode(logoarr);
             String vlogo = new String(encodeBase64, "UTF-8");
         %>
-        <a class="post" style="margin: 0.9rem 0rem !important;" href="post.jsp?postId=<%=v.getId()%>">
+        <a class="post" target="_blank" href="post.jsp?postId=<%=v.getId()%>">
             <img class="company-logo" src="data:image/*;base64,<%=vlogo%>">
             <div class="about-post">
                 <span><%=v.getVacancyName()%></span>
