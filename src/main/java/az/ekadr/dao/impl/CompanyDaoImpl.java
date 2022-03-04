@@ -114,7 +114,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
     @Override
     public void updateCompany(Company newCompany, Long companyId) {
-        String sql = "UPDATE COMPANY SET ABOUT_COMPANY = ?,COMPANY_NAME = ?,LOGO = ?,NAME = ?,PHONE = ?,SURNAME = ?,WEBSITE = ?,CITY_ID = ?)  WHERE ID = ?";
+        String sql = "UPDATE COMPANY SET ABOUT_COMPANY = ?,COMPANY_NAME = ?,LOGO = ?,NAME = ?,PHONE = ?,SURNAME = ?,WEBSITE = ?,CITY_ID = ? WHERE ID = ?";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1, newCompany.getAboutCompany());
             ps.setString(2, newCompany.getCompanyName());

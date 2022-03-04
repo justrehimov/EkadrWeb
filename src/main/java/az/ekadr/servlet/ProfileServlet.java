@@ -6,10 +6,13 @@ import az.ekadr.entites.Company;
 import az.ekadr.service.FileUploadService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 
+@MultipartConfig
 @WebServlet(name = "profile",value = "/profile")
 public class ProfileServlet extends HttpServlet {
 
@@ -55,7 +58,7 @@ public class ProfileServlet extends HttpServlet {
                 c.setLogo(FileUploadService.uploadFile(logo));
             }
             else{
-                c.setLogo(company.getLogo());
+                c.setLogo((SerialBlob)company.getLogo());
             }
             c.setAboutCompany(about);
             CompanyDaoImpl cdi = new CompanyDaoImpl();
@@ -66,7 +69,7 @@ public class ProfileServlet extends HttpServlet {
         else {
            errormessage = "Data cannot be empty";
            session.setAttribute("errorprofile",errormessage);
-           resp.sendRedirect("/profie");
+           resp.sendRedirect("/profile");
         }
 
 

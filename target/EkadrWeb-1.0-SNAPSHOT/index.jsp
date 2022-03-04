@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="account-menu">
-                        <a href="profile.jsp"><span>My Account</span><i class="fas fa-user"></i></a>
+                        <a href="/profile"><span>My Account</span><i class="fas fa-user"></i></a>
                         <a href="profile.jsp"><span>Balance</span><span><%=balance%> &#8380;</span></a>
                         <a href="/vacancy"><span>My vacancies</span><span><%=companyvacancies%></span></a>
                         <a href="/buy_packet"><span>Packet</span><span><%=packetname + " "%><%=adcount%></span></a>
