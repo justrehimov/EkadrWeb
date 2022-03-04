@@ -72,7 +72,7 @@
                     <div class="account-menu">
                         <a href="profile.jsp"><span>My Account</span><i class="fas fa-user"></i></a>
                         <a href="profile.jsp"><span>Balance </span><span><%=balance%> &#8380;</span></a>
-                        <a href="/"><span>Vacancies</span><i class="fas fa-ad"></i></a>
+                        <a href="/vacancy"><span>Vacancies</span><i class="fas fa-ad"></i></a>
                         <a href="/edit"><span>Edit vacancy</span><i class="fas fa-pen"></i></a>
                         <a href="/login"><span>Logout</span><i class="fas fa-sign-out-alt"></i></a>
                     </div>
