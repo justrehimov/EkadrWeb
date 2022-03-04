@@ -1,4 +1,4 @@
-package az.ekadr.controller;
+package az.ekadr.servlet;
 
 import az.ekadr.dao.impl.CompanyDaoImpl;
 import az.ekadr.dao.impl.CompanyOperationDaoImpl;
@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(name = "login",value = "/login")
+@WebServlet(name = "login",value = "/login",urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

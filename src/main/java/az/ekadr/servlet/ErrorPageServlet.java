@@ -1,4 +1,4 @@
-package az.ekadr.controller;
+package az.ekadr.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

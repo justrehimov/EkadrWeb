@@ -1,4 +1,4 @@
-package az.ekadr.controller;
+package az.ekadr.servlet;
 
 import az.ekadr.dao.impl.CompanyOperationDaoImpl;
 
