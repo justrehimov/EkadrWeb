@@ -17,5 +17,6 @@ public interface VacancyDao {
     public List<Vacancy> getVacanciesByCategoryId(Long companyId);
     public List<Vacancy> getVacanciesByIds(Long categoryId,Long companyId,Long experienceId,Long workmodeId);
     public int getVacancySize();
+    public int getVacancySizeByCompanyId(Long companyId);
 
 }

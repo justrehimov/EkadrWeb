@@ -6,17 +6,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%
     Company company = (Company) session.getAttribute("company");
-    int vacancy_count = new VacancyDaoImpl().getVacancySize();
+    VacancyDaoImpl vdi = new VacancyDaoImpl();
+    int vacancy_count = vdi.getVacancySize();
     String login = "display:inline !important;";
     String profile = "display:none !important;";
     byte[] logo = null;
+    int companyvacancies = 0;
+    int adcount = 0;
+    String packetname = "N/A";
     String email = "";
     String fullname = "";
     Float balance = 0F;
     String base64Encoded = "";
     if(company!=null) {
-        login = "display:none  !important;";
-        profile = "display:inline-block  !important;";
+        if(company.getPacketId()!=null){packetname = company.getPacketId().getPacket_name();}
+        companyvacancies = vdi.getVacancySizeByCompanyId(company.getId());
+        adcount = company.getCount_ad();
+        login = "display:none !important;";
+        profile = "display:inline-block !important;";
         Blob blob = company.getLogo();
         logo = blob.getBytes(1,(int)blob.length());
         byte[] encodeBase64 = Base64.getEncoder().encode(logo);
@@ -25,6 +32,7 @@
         fullname = company.getName() + " " + company.getSurname();
         balance = company.getBalance();
     }
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,8 +79,9 @@
                     </div>
                     <div class="account-menu">
                         <a href="profile.jsp"><span>My Account</span><i class="fas fa-user"></i></a>
-                        <a href="profile.jsp"><span>Balance </span><span><%=balance%> &#8380;</span></a>
-                        <a href="/vacancy"><span>Vacancies</span><i class="fas fa-ad"></i></a>
+                        <a href="profile.jsp"><span>Balance</span><span><%=balance%> &#8380;</span></a>
+                        <a href="/vacancy"><span>My vacancies</span><span><%=companyvacancies%></span></a>
+                        <a href="/buy_packet"><span>Packet</span><span><%=packetname + " "%><%=adcount%></span></a>
                         <a href="/edit"><span>Edit vacancy</span><i class="fas fa-pen"></i></a>
                         <a href="/login"><span>Logout</span><i class="fas fa-sign-out-alt"></i></a>
                     </div>

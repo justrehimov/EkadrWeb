@@ -8,17 +8,24 @@
 <%
     Company company = (Company) session.getAttribute("company");
     Long vacancyId = Long.valueOf(request.getParameter("postId"));
-    Vacancy v = new VacancyDaoImpl().getVacancyById(vacancyId);
+    VacancyDaoImpl vdi = new VacancyDaoImpl();
+    Vacancy v = vdi.getVacancyById(vacancyId);
     String login = "display:inline !important;";
     String profile = "display:none !important;";
     byte[] logo = null;
+    int companyvacancies = 0;
+    int adcount = 0;
+    String packetname = "N/A";
     String email = "";
     String fullname = "";
     Float balance = 0F;
     String base64Encoded = "";
     if(company!=null) {
-        login = "display:none  !important;";
-        profile = "display:inline-block  !important;";
+        if(company.getPacketId()!=null){packetname = company.getPacketId().getPacket_name();}
+        companyvacancies = vdi.getVacancySizeByCompanyId(company.getId());
+        adcount = company.getCount_ad();
+        login = "display:none !important;";
+        profile = "display:inline-block !important;";
         Blob blob = company.getLogo();
         logo = blob.getBytes(1,(int)blob.length());
         byte[] encodeBase64 = Base64.getEncoder().encode(logo);
@@ -27,6 +34,7 @@
         fullname = company.getName() + " " + company.getSurname();
         balance = company.getBalance();
     }
+
 
 %>
 <!DOCTYPE html>
@@ -73,8 +81,9 @@
                     </div>
                     <div class="account-menu">
                         <a href="profile.jsp"><span>My Account</span><i class="fas fa-user"></i></a>
-                        <a href="profile.jsp"><span>Balance </span><span><%=balance%> &#8380;</span></a>
-                        <a href="/vacancies"><span>Vacancies</span><i class="fas fa-ad"></i></a>
+                        <a href="profile.jsp"><span>Balance</span><span><%=balance%> &#8380;</span></a>
+                        <a href="/vacancy"><span>My vacancies</span><span><%=companyvacancies%></span></a>
+                        <a href="/buy_packet"><span>Packet</span><span><%=packetname + " "%><%=adcount%></span></a>
                         <a href="/edit"><span>Edit vacancy</span><i class="fas fa-pen"></i></a>
                         <a href="/login"><span>Logout</span><i class="fas fa-sign-out-alt"></i></a>
                     </div>
@@ -119,6 +128,7 @@
         <div class="post-item">Age: <%=v.getAgeId().getAge()%></div>
         <div class="post-item">Salary:<%=v.getSalary()%></div>
         <div class="post-item">Phone: <%=v.getCompanyId().getPhone()%></div>
+        <div class="post-item">Email:<a href="mailto:<%=v.getCompanyId().getEmail()%>"><%=v.getCompanyId().getEmail()%></a></div>
         <div class="post-item">Education: <%=v.getEducationId().getEducation()%></div>
         <%
             String pattern = "MMMM dd, yyyy";
@@ -128,7 +138,6 @@
         %>
         <div class="post-item">Post date: <%=postdate%></div>
         <div class="post-item">Expiration date: <%=expdate%></div>
-        <div class="post-item">Website:<a href="<%=v.getCompanyId().getWebsite()%>"><%=v.getCompanyId().getWebsite()%></a></div>
     </div>
     <div class="about-post">
         <div class="about information">

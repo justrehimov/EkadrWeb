@@ -344,4 +344,23 @@ public class VacancyDaoImpl implements VacancyDao {
         }
         return 0;
     }
+
+    @Override
+    public int getVacancySizeByCompanyId(Long companyId) {
+        String sql = "SELECT COUNT(ID) AS COUNT FROM VACANCY WHERE ACTIVE = 1 AND COMPANY_ID = ?";
+        try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setLong(1,companyId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("COUNT");
+            }
+            else{
+                return 0;
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return 0;
+    }
 }
