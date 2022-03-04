@@ -9,7 +9,6 @@
 <%
     Company company = (Company) session.getAttribute("company");
     List<Category> categoryList = new CategoryDaoImpl().getAllCategory();
-    List<City> cityList = new CityDaoImpl().getAllCity();
     List<Experience> experienceList = new ExperienceDaoImpl().getAllExperience();
     List<Workmode> workmodeList = new WorkmodeDaoImpl().getAllWorkmode();
     List<Education> educationList = new EducationDaoImpl().getAllEducation();
@@ -36,7 +35,8 @@
         response.sendRedirect("/login");
     }
     String msg = "";
-    Object error = session.getAttribute("error");
+    Object error = session.getAttribute("errorpost");
+    session.removeAttribute("errorpost");
     if(error==null){
         msg = "";
     }
@@ -123,24 +123,19 @@
 <div class="container">
     <form action="/new_post" method="post">
 
-        <div class="warning">
-            <span class="message">Her vakansiyanin qiymeti 5AZN teskil edir</span>
-            <button class="close" onclick="closewarning()" id="close"><i class="fas fa-times"></i></button>
-        </div>
-
         <div class="form-row">
             <div class="form-group">
                 <label for="inputName">Vacancy name</label>
-                <input type="text" name="vacancyname" class="form-control" id="inputName" placeholder="Java Backend Developer">
+                <input type="text" name="vacancyname" onclick="clearerror()" class="form-control" id="inputName" placeholder="Java Backend Developer">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputSalary">Salary</label>
-                <input type="text" name="salary" class="form-control" id="inputSalary" placeholder="1000-2000 or by agreement">
+                <input onclick="clearerror()" type="text" name="salary" class="form-control" id="inputSalary" placeholder="1000-2000 or by agreement">
             </div>
             <div class="form-group">
                 <label for="inputCategory">Category</label>
-                <select class="custom-select"  name="category" id="inputCategory">
-                    <option value="0" disabled selected>Category</option>
+                <select onclick="clearerror()" class="custom-select"  name="category" id="inputCategory">
+                    <option value="0">Category</option>
                     <%for(Category c:categoryList){%>
                     <option value="<%=c.getId()%>"><%=c.getCategory()%></option>
                     <%}%>
@@ -148,8 +143,8 @@
             </div>
             <div class="form-group">
                 <label for="inputWorkmode">Work mode</label>
-                <select class="custom-select" name="workmode" id="inputWorkmode">
-                    <option value="0"  disabled selected>Work mode</option>
+                <select onclick="clearerror()" class="custom-select" name="workmode" id="inputWorkmode">
+                    <option value="0" >Work mode</option>
                     <%for(Workmode w:workmodeList){%>
                     <option value="<%=w.getId()%>"><%=w.getWorkmode()%></option>
                     <%}%>
@@ -162,8 +157,8 @@
 
             <div class="form-group col-md-6">
                 <label for="inputExperience">Experience</label>
-                <select class="custom-select" name="experience" id="inputExperience">
-                    <option value="0" disabled selected>Experience</option>
+                <select onclick="clearerror()" class="custom-select" name="experience" id="inputExperience">
+                    <option value="0">Experience</option>
                     <%for(Experience e:experienceList){%>
                     <option value="<%=e.getId()%>"><%=e.getExperience()%></option>
                     <%}%>
@@ -172,8 +167,8 @@
 
             <div class="form-group">
                 <label for="inputEducation">Education</label>
-                <select class="custom-select" name="education" id="inputEducation">
-                    <option value="0" disabled selected>Education</option>
+                <select onclick="clearerror()"  class="custom-select" name="education" id="inputEducation">
+                    <option value="0">Education</option>
                     <%for(Education e:educationList){%>
                     <option value="<%=e.getId()%>"><%=e.getEducation()%></option>
                     <%}%>
@@ -181,8 +176,8 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputAge">Age</label>
-                <select class="custom-select" name="age" id="inputAge">
-                    <option value="0" disabled selected>Age</option>
+                <select onclick="clearerror()"  class="custom-select" name="age" id="inputAge">
+                    <option value="0" >Age</option>
                     <%for(Age a:ageList){%>
                     <option value="<%=a.getId()%>"><%=a.getAge()%></option>
                     <%}%>
@@ -191,7 +186,7 @@
 
             <div class="form-group col-md-6">
                 <label for="inputExpdate">Exp date</label>
-                <input type="date" name="expdate" class="form-control" id="inputExpdate">
+                <input onclick="clearerror()"  type="date" name="expdate" class="form-control" id="inputExpdate">
             </div>
         </div>
 
@@ -207,7 +202,7 @@
             </div>
         </div>
         <div class="form-group wide">
-            <label for="textareaAdress">Adress</label>
+            <label onclick="clearerror()"  for="textareaAdress">Adress</label>
             <textarea name="address" class="form-control" id="textareaAdress" rows="4"></textarea>
         </div>
         <div class="form-btn">

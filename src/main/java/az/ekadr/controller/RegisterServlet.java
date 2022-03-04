@@ -1,4 +1,4 @@
-package az.ekadr.servlet;
+package az.ekadr.controller;
 
 import az.ekadr.dao.impl.CityDaoImpl;
 import az.ekadr.dao.impl.CompanyDaoImpl;
@@ -47,7 +47,7 @@ public class RegisterServlet extends HttpServlet {
                 CompanyOperationDaoImpl codi = new CompanyOperationDaoImpl();
                 if(codi.existsCompany(email) != null){;
                     errormessage = "This email already registered";
-                    session.setAttribute("error",errormessage);
+                    session.setAttribute("errorregister",errormessage);
                     resp.sendRedirect("/register");
                 }
                 else {
@@ -76,12 +76,12 @@ public class RegisterServlet extends HttpServlet {
                     session.setAttribute("email",email);
                     boolean send = svs.sendVertificationMail(email,"Ekadr Vertification",code);
                     if(send){
-                        session.removeAttribute("error");
+                        session.removeAttribute("errorregister");
                         resp.sendRedirect("/vertification");
                     }
                     else{
                         errormessage = "Confirm code couldn't be sent";
-                        session.setAttribute("error",errormessage);
+                        session.setAttribute("errorregister",errormessage);
                         resp.sendRedirect("/register");
                     }
                 }
@@ -89,7 +89,7 @@ public class RegisterServlet extends HttpServlet {
             }
             else{
                 errormessage = "Data cannot be empty";
-                session.setAttribute("error",errormessage);
+                session.setAttribute("errorregister",errormessage);
                 resp.sendRedirect("/register");
             }
 

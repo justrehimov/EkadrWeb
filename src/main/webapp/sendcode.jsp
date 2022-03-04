@@ -2,7 +2,8 @@
 <%@ page errorPage = "error.jsp" %>
 <%
     String msg = "";
-    Object error = session.getAttribute("error");
+    Object error = session.getAttribute("errorsendcode");
+    session.removeAttribute("errorsendcode");
     if(error==null){
         msg = "";
     }

@@ -1,4 +1,4 @@
-package az.ekadr.servlet;
+package az.ekadr.controller;
 
 import az.ekadr.dao.impl.VacancyDaoImpl;
 import az.ekadr.entites.Vacancy;
@@ -17,6 +17,7 @@ public class VacancyListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         resp.sendRedirect("vacancylist.jsp");
     }
     @Override

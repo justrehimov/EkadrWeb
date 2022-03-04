@@ -1,4 +1,4 @@
-package az.ekadr.servlet;
+package az.ekadr.controller;
 
 import az.ekadr.dao.impl.CompanyDaoImpl;
 import az.ekadr.dao.impl.CompanyOperationDaoImpl;
@@ -30,18 +30,18 @@ public class LoginServlet extends HttpServlet {
             if(id !=null){
                 CompanyDaoImpl companyDao = new CompanyDaoImpl();
                 session.setAttribute("company",companyDao.getCompanyById(id));
-                session.removeAttribute("error");
+                session.removeAttribute("errorlogin");
                 resp.sendRedirect("index.jsp");
             }
             else{
                 errormessage = "Email or password is invalid or not verified account";
-                session.setAttribute("error",errormessage);
+                session.setAttribute("errorlogin",errormessage);
                 resp.sendRedirect("/login");
             }
         }
         else{
             errormessage = "Email or password cannot be empty";
-            session.setAttribute("error",errormessage);
+            session.setAttribute("errorlogin",errormessage);
             resp.sendRedirect("/login");
         }
 

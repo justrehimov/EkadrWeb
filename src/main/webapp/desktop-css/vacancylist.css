@@ -118,16 +118,16 @@
     height: 9rem;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center; 
+    align-items: center;
     text-align: left;
     border-left: 1px solid #0EBBDA;
 }
 .additional-info span:nth-child(1){
-font-size: 1.4rem;
+    font-size: 1.4rem;
 }
 .additional-info span:nth-child(1){
     font-size: 1.2rem;
 }
 .additional-info span:nth-child(1){
-   font-size: 1.2rem; 
+    font-size: 1.2rem;
 }

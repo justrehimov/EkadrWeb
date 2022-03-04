@@ -6,7 +6,8 @@
 <%
     List<City> cityList = new CityDaoImpl().getAllCity();
     String msg = "";
-    Object error = session.getAttribute("error");
+    Object error = session.getAttribute("errorregister");
+    session.removeAttribute("errorregister");
     if(error==null){
         msg = "";
     }

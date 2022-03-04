@@ -3,6 +3,7 @@ package az.ekadr.dao.impl;
 import az.ekadr.dao.CompanyDao;
 import az.ekadr.db.DbHelper;
 import az.ekadr.entites.Company;
+import az.ekadr.entites.Packet;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -32,6 +33,10 @@ public class CompanyDaoImpl implements CompanyDao {
                 company.setBalance(rs.getFloat("BALANCE"));
                 company.setCityId(new CityDaoImpl().getCityById(rs.getLong("CITY_ID")));
                 company.setDataDate(rs.getDate("DATA_DATE"));
+                PacketDaoImpl pdi = new PacketDaoImpl();
+                Packet p = pdi.getPacketById(rs.getLong("PACKET_ID"));
+                company.setPacketId(p);
+                company.setCount_ad(rs.getInt("COUNT_AD"));
                 company.setVerified(rs.getInt("VERIFIED"));
                 company.setActive(rs.getInt("ACTIVE"));
                 companyList.add(company);
@@ -63,6 +68,10 @@ public class CompanyDaoImpl implements CompanyDao {
                 company.setAboutCompany(rs.getString("ABOUT_COMPANY"));
                 company.setLogo(rs.getBlob("LOGO"));
                 company.setBalance(rs.getFloat("BALANCE"));
+                PacketDaoImpl pdi = new PacketDaoImpl();
+                Packet p = pdi.getPacketById(rs.getLong("PACKET_ID"));
+                company.setPacketId(p);
+                company.setCount_ad(rs.getInt("COUNT_AD"));
                 company.setCityId(new CityDaoImpl().getCityById(rs.getLong("CITY_ID")));
                 company.setDataDate(rs.getDate("DATA_DATE"));
                 company.setVerified(rs.getInt("VERIFIED"));

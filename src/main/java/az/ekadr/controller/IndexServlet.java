@@ -1,5 +1,6 @@
-package az.ekadr.servlet;
+package az.ekadr.controller;
 
+import az.ekadr.dao.impl.CompanyDaoImpl;
 import az.ekadr.entites.Company;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,8 @@ public class IndexServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Company company = (Company) session.getAttribute("company");
         if(company!=null){
-            req.setAttribute("company",company);
+            Company c = new CompanyDaoImpl().getCompanyById(company.getId());
+            req.setAttribute("company",c);
         }
         else{
             req.setAttribute("company",null);

@@ -2,6 +2,7 @@ package az.ekadr.dao.impl;
 
 import az.ekadr.dao.CompanyOperationDao;
 import az.ekadr.db.DbHelper;
+import az.ekadr.entites.Packet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -74,6 +75,37 @@ public class CompanyOperationDaoImpl implements CompanyOperationDao {
         String sql = "UPDATE COMPANY SET BALANCE = ? WHERE ID = ?";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql);){
             ps.setFloat(1,balance);
+            ps.setLong(2,companyId);
+            ps.executeUpdate();
+            return true;
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public void buyPacket(Long companyId, Long packetId) {
+        String sql = "UPDATE COMPANY SET PACKET_ID = ?,COUNT_AD = ? WHERE ID = ?";
+        try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
+            PacketDaoImpl pdi = new PacketDaoImpl();
+            Packet p = pdi.getPacketById(packetId);
+            ps.setLong(1,packetId);
+            ps.setInt(2,p.getCount_ad());
+            ps.setLong(3,companyId);
+            ps.executeUpdate();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean decreaseCountAd(Long companyId, Integer countAd) {
+        String sql = "UPDATE COMPANY SET COUNT_AD = ? WHERE ID = ?";
+        try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){;
+            ps.setInt(1,countAd);
             ps.setLong(2,companyId);
             ps.executeUpdate();
             return true;

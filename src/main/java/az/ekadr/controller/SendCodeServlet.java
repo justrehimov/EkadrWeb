@@ -1,4 +1,4 @@
-package az.ekadr.servlet;
+package az.ekadr.controller;
 
 import az.ekadr.dao.impl.CompanyOperationDaoImpl;
 import az.ekadr.service.SendVertificationService;
@@ -16,6 +16,7 @@ import java.util.Random;
 public class SendCodeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         resp.sendRedirect("sendcode.jsp");
     }
 
@@ -40,19 +41,19 @@ public class SendCodeServlet extends HttpServlet {
                 }
                 else{
                     errormessage = "Confirm code couldn't be sent";
-                    session.setAttribute("error",errormessage);
+                    session.setAttribute("errorsendcode",errormessage);
                     resp.sendRedirect("/sendcode");
                 }
             }
             else{
                 errormessage = "Email not found";
-                session.setAttribute("error",errormessage);
+                session.setAttribute("errorsendcode",errormessage);
                 resp.sendRedirect("/sendcode");
             }
         }
         else{
             errormessage = "Email cannot be empty";
-            session.setAttribute("error",errormessage);
+            session.setAttribute("errorsendcode",errormessage);
             resp.sendRedirect("/sendcode");
         }
 

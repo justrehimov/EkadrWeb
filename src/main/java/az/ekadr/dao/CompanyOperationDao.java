@@ -6,4 +6,6 @@ public interface CompanyOperationDao {
     public void changePassword(String password,String email);
     public Long existsCompany(String email);
     public boolean withdrawBalance(Long companyId,Float amount);
+    public void buyPacket(Long companyId,Long packetId);
+    public boolean decreaseCountAd(Long companyId,Integer countAd);
 }

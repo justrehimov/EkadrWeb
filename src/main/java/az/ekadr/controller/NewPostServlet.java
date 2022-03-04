@@ -1,4 +1,4 @@
-package az.ekadr.servlet;
+package az.ekadr.controller;
 
 import az.ekadr.dao.impl.*;
 import az.ekadr.entites.Company;
@@ -8,10 +8,7 @@ import lombok.SneakyThrows;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,31 +70,31 @@ public class NewPostServlet extends HttpServlet {
             vacancy.setId(null);
             vacancy.setSalary(salary);
             VacancyDaoImpl vdi = new VacancyDaoImpl();
-            Float amount = 5F;
-            if (addcompany.getBalance().compareTo(amount) != -1) {
+            Company c = (Company) session.getAttribute("company");
+            if (c.getCount_ad()>0) {
                 CompanyOperationDaoImpl codi = new CompanyOperationDaoImpl();
-                boolean success = codi.withdrawBalance(company,addcompany.getBalance()-amount);
+                boolean success = codi.decreaseCountAd(company,c.getCount_ad()-1);
                 if(success){
                     session.setAttribute("company",cdi.getCompanyById(company));
                     vdi.addVacancy(vacancy);
                     resp.sendRedirect("/index");
                 }
-                else{
+                else {
                     errormessage = "Something went wrong";
-                    session.setAttribute("error",errormessage);
+                    session.setAttribute("errorpost",errormessage);
                     resp.sendRedirect("/new_post");
                 }
             }
             else{
-                errormessage = "Insufficient balance";
-                session.setAttribute("error",errormessage);
+                errormessage = "Buy new packet";
+                session.setAttribute("errorpost",errormessage);
                 resp.sendRedirect("/new_post");
             }
         }
         else {
             errormessage = "Data cannot be empty";
-            session.setAttribute("error",errormessage);
+            session.setAttribute("errorpost",errormessage);
             resp.sendRedirect("/new_post");
         }
-        }
     }
+}

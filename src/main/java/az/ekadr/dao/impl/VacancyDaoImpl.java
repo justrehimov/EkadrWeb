@@ -327,4 +327,21 @@ public class VacancyDaoImpl implements VacancyDao {
             return null;
         }
     }
+
+    @Override
+    public int getVacancySize() {
+        String sql = "SELECT COUNT(ID) AS COUNT FROM VACANCY WHERE ACTIVE = 1";
+        try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql);ResultSet rs = ps.executeQuery()){
+            if(rs.next()){
+                return rs.getInt("COUNT");
+            }
+            else{
+                return 0;
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return 0;
+    }
 }

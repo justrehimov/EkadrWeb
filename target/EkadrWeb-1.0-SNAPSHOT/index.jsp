@@ -2,9 +2,11 @@
 <%@ page import="java.sql.Blob" %>
 <%@ page errorPage = "error.jsp" %>
 <%@ page import="java.util.Base64" %>
+<%@ page import="az.ekadr.dao.impl.VacancyDaoImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%
     Company company = (Company) session.getAttribute("company");
+    int vacancy_count = new VacancyDaoImpl().getVacancySize();
     String login = "display:inline !important;";
     String profile = "display:none !important;";
     byte[] logo = null;
@@ -54,6 +56,7 @@
         <li>
         </li>
         <li><a href="/new_post">Add vacancy</a></li>
+        <li><a href="/buy_packet">Packets</a></li>
         <li><a href="/login" style="<%=login%>">Login</a></li>
         <li>
             <div class="dropdown" style="<%=profile%>">
@@ -107,7 +110,7 @@
     </header>
     <div class="category">
         <h1>Categories</h1>
-        <span>150 vacancies</span>
+        <span><%=vacancy_count%> active vacancies</span>
         <div class="categories">
             <span class="cards">
                 <i class="fas fa-code"></i>

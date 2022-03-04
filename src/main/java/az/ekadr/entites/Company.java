@@ -23,4 +23,6 @@ public class Company {
     private Integer active;
     private String website;
     private City cityId;
+    private Packet packetId;
+    private Integer count_ad;
 }
