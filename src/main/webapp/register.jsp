@@ -87,7 +87,7 @@
                     <option value="<%=c.getId()%>"><%=c.getCity()%></option>
                     <%}%>
                 </select>
-                <input class="input" onclick="clearerror()"  name="website" type="url" placeholder="Website (Optional)">
+                <input class="input" onclick="clearerror()"  name="website" type="url" placeholder="Website(Optional)">
                 <input class="input" onclick="clearerror()"  name="password" type="password" minlength="8" placeholder="Password">
                 <label for="upload" class="input wrapper" id="wrapper" data-text="Select logo">
                     <input id="upload" onclick="clearerror()"  name="logo" onchange="checkfile()" type="file" class="field" accept="image/*">

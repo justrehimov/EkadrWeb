@@ -36,6 +36,8 @@
 }
 
 .categories{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     width: 100%;
     height: auto;
     display: flex;
@@ -68,7 +70,8 @@
     text-decoration: none !important;
     font-size: 1.2rem;
     cursor: pointer;
+    color: black !important;
 }
 .cards a:hover{
-    color: #0EBBDA;
+    color: #0EBBDA !important;
 }

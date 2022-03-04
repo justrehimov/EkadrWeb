@@ -36,6 +36,8 @@
 }
 
 .categories{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     width: 100%;
     height: auto;
     display: flex;

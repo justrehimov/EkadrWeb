@@ -16,10 +16,10 @@ public class IndexServlet extends HttpServlet {
         Company company = (Company) session.getAttribute("company");
         if(company!=null){
             Company c = new CompanyDaoImpl().getCompanyById(company.getId());
-            req.setAttribute("company",c);
+            session.setAttribute("company",c);
         }
         else{
-            req.setAttribute("company",null);
+            session.setAttribute("company",null);
         }
         resp.sendRedirect("index.jsp");
     }
