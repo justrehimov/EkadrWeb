@@ -31,10 +31,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" media="screen and (min-width: 768px)" href="./desktop-css/profile.css">
-    <link rel="stylesheet" media="screen and (max-width: 767px)" href="./mobile-css/profile.css">
+    <link rel="stylesheet" media="screen and (max-width: 767px)" href="./desktop-css/profile.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"/>
-    <link rel="stylesheet" href="profile.css"/>
     <title>Profile</title>
 </head>
 <body>
@@ -51,7 +50,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
-                <form method="post" action="/profile" enctype="multipart/form-data">
+                <form method="post" action="/profile">
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" name="name" placeholder="Name" value="<%=company.getName()%>"></div>
                     <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" name="surname" value="<%=company.getSurname()%>" placeholder="Surname"></div>
@@ -62,7 +61,7 @@
                     </div>
                     <div class="col-md-12"><label class="labels">City</label>
                         <select name="city" class="form-select">
-                            <option value="<%=company.getCityId().getId()%>"><%=company.getCityId().getId()%></option>
+                            <option value="<%=company.getCityId().getId()%>"><%=company.getCityId().getCity()%></option>
                             <% for(City c:cityList) { %>
                              <%if(c.getId().compareTo(company.getCityId().getId()) != 0) { %>
                                 <option value="<%=c.getId()%>"><%=c.getCity()%></option>
@@ -73,15 +72,12 @@
 
                     <div class="col-md-12"><label class="labels">Phone</label><input type="text" name="phone" class="form-control" placeholder="Phone" value="<%=company.getPhone()%>"></div>
                     <div class="col-md-12"><label class="labels">Website</label><input type="text" name="website" class="form-control" placeholder="Website" value="<%=company.getWebsite()%>"></div>
-                    <div class="mb-3">
-                        <label for="upload" class="labels">Select logo</label>
-                        <input id="upload" onclick="clearerror()"  name="logo" onchange="checkfile()" type="file" class="form-control" accept="image/*">
-                    </div>
-                    <div class="form-floating">
+                    <div class="col-md-12">
+                        <label class="labels">About</label>
                         <textarea class="form-control" placeholder="About company" name="about" rows="4"><%=company.getAboutCompany().trim()%></textarea>
                     </div>
                 </div>
-                <div class="mt-5 text-right">
+                <div class="mt-3 text-right">
                     <div class="error-message">
                         <span class="error-txt" id="error"><%=msg%></span>
                     </div>

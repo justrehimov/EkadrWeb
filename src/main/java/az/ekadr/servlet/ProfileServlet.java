@@ -4,6 +4,7 @@ import az.ekadr.dao.impl.CityDaoImpl;
 import az.ekadr.dao.impl.CompanyDaoImpl;
 import az.ekadr.entites.Company;
 import az.ekadr.service.FileUploadService;
+import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -11,8 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.sql.Blob;
 
-@MultipartConfig
+
 @WebServlet(name = "profile",value = "/profile")
 public class ProfileServlet extends HttpServlet {
 
@@ -30,6 +34,7 @@ public class ProfileServlet extends HttpServlet {
         resp.sendRedirect("profile.jsp");
     }
 
+    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -41,10 +46,8 @@ public class ProfileServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         String website = req.getParameter("website");
         String city = req.getParameter("city");
-        Part logo = req.getPart("logo");
         String about = req.getParameter("about");
-        if(!name.isEmpty() & !surname.isEmpty() & !companyname.isEmpty() & !phone.isEmpty() &
-          company != null & !website.isEmpty() & !city.isEmpty() & !about.isEmpty())
+        if(name!=null & surname!=null & companyname!=null & phone!=null & company != null & website!=null & city!=null & about!=null)
         {
             Company c = new Company();
             c.setId(company.getId());
@@ -54,12 +57,6 @@ public class ProfileServlet extends HttpServlet {
             c.setSurname(surname);
             c.setWebsite(website);
             c.setPhone(phone);
-            if(logo!=null){
-                c.setLogo(FileUploadService.uploadFile(logo));
-            }
-            else{
-                c.setLogo((SerialBlob)company.getLogo());
-            }
             c.setAboutCompany(about);
             CompanyDaoImpl cdi = new CompanyDaoImpl();
             cdi.updateCompany(c,c.getId());
