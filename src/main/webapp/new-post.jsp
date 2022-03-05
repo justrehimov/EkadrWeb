@@ -67,7 +67,7 @@
     <link rel="stylesheet" media="screen and (max-width: 767px)" href="./mobile-css/generallynew.css">
     <link rel="stylesheet" media="screen and (min-width: 768px)" href="./desktop-css/new-post.css">
     <link rel="stylesheet" media="screen and (max-width: 767px)" href="./mobile-css/new-post.css">
-    <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js" charset="UTF-8"></script>
     <title>New post</title>
 </head>
 <body>
@@ -95,11 +95,10 @@
                         </div>
                     </div>
                     <div class="account-menu">
-                        <a href="profile.jsp"><span>My Account</span><i class="fas fa-user"></i></a>
-                        <a href="profile.jsp"><span>Balance</span><span><%=balance%> &#8380;</span></a>
-                        <a href="/vacancy"><span>My vacancies</span><span><%=companyvacancies%></span></a>
+                        <a href="/profile"><span>My Account</span><i class="fas fa-user"></i></a>
+                        <a href="/balance"><span>Balance</span><span><%=balance%> &#8380;</span></a>
+                        <a href="/my_vacancies"><span>My vacancies</span><span><%=companyvacancies%></span></a>
                         <a href="/buy_packet"><span>Packet</span><span><%=packetname + " "%><%=adcount%></span></a>
-                        <a href="/edit"><span>Edit vacancy</span><i class="fas fa-pen"></i></a>
                         <a href="/login"><span>Logout</span><i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>
@@ -265,7 +264,9 @@
     var myeditor1;
     var myeditor2;
     ClassicEditor
-        .create(document.querySelector('#editor'))
+        .create(document.querySelector('#editor'),{
+            toolbar: [ 'bold','link','bulletedList','undo', 'redo', ]
+        })
         .then(editor => {
             console.log(editor);
             myeditor1 = editor;
@@ -275,7 +276,9 @@
         });
 
     ClassicEditor
-        .create(document.querySelector('#editor2'))
+        .create(document.querySelector('#editor2'),{
+            toolbar: [ 'bold','link','bulletedList','undo', 'redo', ]
+        })
         .then(editor2 => {
             console.log(editor2);
             myeditor2 = editor2;

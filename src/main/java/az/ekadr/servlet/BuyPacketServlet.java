@@ -19,6 +19,7 @@ import java.util.List;
 public class BuyPacketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         PacketDaoImpl packetDao = new PacketDaoImpl();
         List<Packet> packetList = packetDao.getAllPacket();
@@ -28,6 +29,7 @@ public class BuyPacketServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String packet = req.getParameter("packet");
         HttpSession session = req.getSession();
         Company company = (Company) session.getAttribute("company");

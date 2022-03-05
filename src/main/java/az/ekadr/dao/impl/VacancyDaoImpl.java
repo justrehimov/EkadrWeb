@@ -218,7 +218,7 @@ public class VacancyDaoImpl implements VacancyDao {
 
     @Override
     public void updateVacancy(Vacancy newVacancy, Long vacancyId) {
-        String sql = "UPDATE VACANCY SET VACANCY_NAME = ?, INFORMATION = ?, REQUIREMENTS = ?, SALARY = ?, ADDRESS = ?, AGE_ID = ?, CATEGORY_ID = ?, COMPANY_ID = ?, EXPERIENCE_ID = ?, EDUCATION_ID, WORKMODE_ID = ?, ACTIVE = ?, DATA_DATE = ?, EXP_DATE = ? WHERE ID = ?)";
+        String sql = "UPDATE VACANCY SET VACANCY_NAME = ?, INFORMATION = ?, REQUIREMENTS = ?, SALARY = ?, ADDRESS = ?, AGE_ID = ?, CATEGORY_ID = ?, EXPERIENCE_ID = ?, EDUCATION_ID = ?, WORKMODE_ID = ?, EXP_DATE = ? WHERE ID = ?";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setString(1,newVacancy.getVacancyName());
             ps.setString(2,newVacancy.getInformation());
@@ -227,16 +227,12 @@ public class VacancyDaoImpl implements VacancyDao {
             ps.setString(5,newVacancy.getAddress());
             ps.setLong(6,newVacancy.getAgeId().getId());
             ps.setLong(7,newVacancy.getCategoryId().getId());
-            ps.setLong(8,newVacancy.getCompanyId().getId());
-            ps.setLong(9,newVacancy.getExperienceId().getId());
-            ps.setLong(10,newVacancy.getEducationId().getId());
-            ps.setLong(11,newVacancy.getWorkmodeId().getId());
-            ps.setInt(12,newVacancy.getActive());
-            ps.setDate(13,new Date(newVacancy.getDataDate().getTime()));
-            ps.setDate(14,new Date(newVacancy.getExpDate().getTime()));
-            ps.setLong(15,vacancyId);
+            ps.setLong(8,newVacancy.getExperienceId().getId());
+            ps.setLong(9,newVacancy.getEducationId().getId());
+            ps.setLong(10,newVacancy.getWorkmodeId().getId());
+            ps.setDate(11,new Date(newVacancy.getExpDate().getTime()));
+            ps.setLong(12,vacancyId);
             ps.executeUpdate();
-            c.commit();
         }
         catch (Exception ex){
             ex.printStackTrace();

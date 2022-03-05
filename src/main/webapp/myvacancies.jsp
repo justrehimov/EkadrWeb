@@ -61,7 +61,9 @@
                   <a class="btn btn-info mr-2" href="post.jsp?postId=<%=v.getId()%>">Show</a>
                 </li>
                 <li class="nav-item">
-                  <a class="btn btn-secondary mr-2" href="edit.jsp?postId<%=v.getId()%>">Edit</a>
+                  <form method="get" action="/edit">
+                    <button type="submit" value="<%=v.getId()%>" name="editId" class="btn btn-secondary mr-2">Edit</button>
+                  </form>
                 </li>
                 <li class="nav-item">
                   <button class="btn btn-danger mr-2" onclick="setId('<%=v.getId()%>')" data-bs-toggle="modal" data-bs-target="#exampleModal" >Delete</button>

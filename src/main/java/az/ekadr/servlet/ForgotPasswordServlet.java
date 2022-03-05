@@ -14,12 +14,13 @@ import java.io.IOException;
 public class ForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
         resp.sendRedirect("forgotpassword.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String errormessage = "";
         HttpSession session = req.getSession();
         String code = req.getParameter("code");
