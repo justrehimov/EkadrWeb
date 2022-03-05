@@ -1,5 +1,6 @@
 <%@ page import="az.ekadr.entites.Company" %>
 <%@ page import="java.sql.Blob" %>
+<%@ page errorPage="error.jsp"%>
 <%@ page import="java.util.Base64" %>
 <%@ page import="az.ekadr.dao.impl.CityDaoImpl" %>
 <%@ page import="java.util.List" %>
@@ -7,17 +8,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Company company = (Company) session.getAttribute("company");
-    CityDaoImpl cdi = new CityDaoImpl();
-    List<City> cityList = cdi.getAllCity();
-    Blob blob = company.getLogo();
-    byte[] logo = blob.getBytes(1,(int)blob.length());
-    byte[] encodeBase64 = Base64.getEncoder().encode(logo);
-    String base64Encoded = new String(encodeBase64, "UTF-8");
-    String fullname = company.getName() + " " + company.getSurname();
+    List<City> cityList = null;
+    String base64Encoded = "";
+    String fullname = "";
     String msg = "";
-    String errormessage = (String) session.getAttribute("errorprofile");
-    if(errormessage!=null){
-        msg = errormessage;
+    if(company==null){response.sendRedirect("login.jsp");}
+    else{
+        CityDaoImpl cdi = new CityDaoImpl();
+        cityList = cdi.getAllCity();
+        Blob blob = company.getLogo();
+        byte[] logo = blob.getBytes(1,(int)blob.length());
+        byte[] encodeBase64 = Base64.getEncoder().encode(logo);
+        base64Encoded = new String(encodeBase64, "UTF-8");
+        fullname = company.getName() + " " + company.getSurname();
+        String errormessage = (String) session.getAttribute("errorprofile");
+        session.removeAttribute("errorprofile");
+        if(errormessage!=null){
+            msg = errormessage;
+        }
     }
 %>
 <!DOCTYPE html>
@@ -42,7 +50,16 @@
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                 <img class="rounded-circle mt-5" width="150px" src="data:image/*;base64,<%=base64Encoded%>">
-                <span class="font-weight-bold"><%=fullname%></span><span class="text-black-50"><%=company.getEmail()%></span>
+                <span class="font-weight-bold mt-2"><%=fullname%></span><span class="text-black-50 mt-1"><%=company.getEmail()%></span>
+                <form method="post" action="/update_profile" enctype="multipart/form-data">
+                <div class="form-row mt-3">
+                    <label for="upload">
+                        <input type="file" id="upload" accept="image/*" name="logo" style="z-index: -5;width: 0rem;">
+                        <div class="btn btn-primary">Upload photo</div>
+                    </label>
+                    <input class="btn btn-primary" type="submit" value="Save">
+                </div>
+                </form>
             </div>
         </div>
         <div class="col-md-9 border-right">

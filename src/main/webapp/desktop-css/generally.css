@@ -3,9 +3,9 @@
     padding: 0;
     box-sizing: border-box;
     outline: none;
-    font-family: 'Rubik', sans-serif; 
+    font-family: 'Rubik', sans-serif;
 }
-.navbar{ 
+.navbar{
     width: 100%;
     height: auto !important;
     display: flex !important;
@@ -41,16 +41,16 @@
 }
 .dropdown-content{
     display: none;
-    width: 19rem;
+    width: 23rem;
     height: auto;
     background-color: white;
     border-radius: 5px;
-    padding: 15px 10px;
+    padding: 0px 10px;
     border:1px solid rgb(214, 214, 214);
     position: absolute;
     z-index: 1;
     color: #011657;
-    transform: translateX(-14rem) translateY(0.5rem);
+    transform: translateX(-19rem) translateY(0.5rem);
 }
 .dropdown:hover .dropdown-content{
     display: block;
@@ -94,15 +94,15 @@
     padding: 0.5rem 0.1rem 0.5rem 0.1rem;
 }
 .img-container{
-    width: 33%;
-    height: 3rem;
+    width: 35%;
+    height: 5rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .account-profile{
     display: flex;
-    height: 3rem;
+    width: 5rem;
     justify-content: center;
     align-items: center;
 }
@@ -111,7 +111,7 @@
     width: 63%;
     height: auto;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     color: black;
 }
@@ -130,7 +130,7 @@
     align-items: center;
     justify-content: space-between;
     background:linear-gradient(to right,#0EBBDA,#107EB5,#7d2ae8);
-    color: white; 
+    color: white;
     padding: 1.5rem !important;
 }
 .contacts{
@@ -176,7 +176,7 @@
 }
 .insta{
     background:linear-gradient(to right,#8a3ab9,#bc2a8d,#fccc63,#fbad50 );
-    border-radius: 12px; 
+    border-radius: 12px;
 }
 .insta:hover{
     color: white;
@@ -198,7 +198,7 @@
     text-decoration: none;
 }
 .face{
-    border-radius: 10px; 
+    border-radius: 10px;
     background-color:#4267B2 ;
 }
 .face:hover{

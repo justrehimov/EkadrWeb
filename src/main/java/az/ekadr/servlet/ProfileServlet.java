@@ -3,18 +3,11 @@ package az.ekadr.servlet;
 import az.ekadr.dao.impl.CityDaoImpl;
 import az.ekadr.dao.impl.CompanyDaoImpl;
 import az.ekadr.entites.Company;
-import az.ekadr.service.FileUploadService;
 import lombok.SneakyThrows;
-
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.sql.Blob;
 
 
 @WebServlet(name = "profile",value = "/profile")
@@ -27,11 +20,11 @@ public class ProfileServlet extends HttpServlet {
         if(company!=null){
             Company c = new CompanyDaoImpl().getCompanyById(company.getId());
             session.setAttribute("company",c);
+            resp.sendRedirect("profile.jsp");
         }
         else{
             resp.sendRedirect("/login");
         }
-        resp.sendRedirect("profile.jsp");
     }
 
     @SneakyThrows

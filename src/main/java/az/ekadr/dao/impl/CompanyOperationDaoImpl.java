@@ -4,6 +4,7 @@ import az.ekadr.dao.CompanyOperationDao;
 import az.ekadr.db.DbHelper;
 import az.ekadr.entites.Packet;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -106,6 +107,21 @@ public class CompanyOperationDaoImpl implements CompanyOperationDao {
         String sql = "UPDATE COMPANY SET COUNT_AD = ? WHERE ID = ?";
         try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){;
             ps.setInt(1,countAd);
+            ps.setLong(2,companyId);
+            ps.executeUpdate();
+            return true;
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateProfilePicture(Long companyId, Blob blob) {
+        String sql = "UPDATE COMPANY SET LOGO = ? WHERE ID = ?";
+        try(Connection c = DbHelper.getConnection();PreparedStatement ps = c.prepareStatement(sql)){;
+            ps.setBlob(1,blob);
             ps.setLong(2,companyId);
             ps.executeUpdate();
             return true;
