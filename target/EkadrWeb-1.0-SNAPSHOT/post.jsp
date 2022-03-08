@@ -8,6 +8,7 @@
 <%
     Company company = (Company) session.getAttribute("company");
     Long vacancyId = Long.valueOf(request.getParameter("postId"));
+    if(vacancyId==null){response.sendRedirect("error.jsp");}
     VacancyDaoImpl vdi = new VacancyDaoImpl();
     Vacancy v = vdi.getVacancyById(vacancyId);
     String login = "display:inline !important;";
@@ -80,11 +81,10 @@
                         </div>
                     </div>
                     <div class="account-menu">
-                        <a href="profile.jsp"><span>My Account</span><i class="fas fa-user"></i></a>
-                        <a href="profile.jsp"><span>Balance</span><span><%=balance%> &#8380;</span></a>
-                        <a href="/vacancy"><span>My vacancies</span><span><%=companyvacancies%></span></a>
+                        <a href="/profile"><span>My Account</span><i class="fas fa-user"></i></a>
+                        <a href="/balance"><span>Balance</span><span><%=balance%> &#8380;</span></a>
+                        <a href="/my_vacancies"><span>My vacancies</span><span><%=companyvacancies%></span></a>
                         <a href="/buy_packet"><span>Packet</span><span><%=packetname + " "%><%=adcount%></span></a>
-                        <a href="/edit"><span>Edit vacancy</span><i class="fas fa-pen"></i></a>
                         <a href="/login"><span>Logout</span><i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>
@@ -120,15 +120,15 @@
 <div class="content">
     <h1><%=v.getVacancyName()%></h1>
     <div class="post-header">
-        <div class="post-item">City:<%=v.getCompanyId().getCityId().getCity()%></div>
+        <div class="post-item">City: <%=v.getCompanyId().getCityId().getCity()%></div>
         <div class="post-item">Work mode: <%=v.getWorkmodeId().getWorkmode()%></div>
         <div class="post-item">Experience: <%=v.getExperienceId().getExperience()%></div>
         <div class="post-item">Category: <%=v.getCategoryId().getCategory()%></div>
         <div class="post-item">Company: <%=v.getCompanyId().getCompanyName()%></div>
         <div class="post-item">Age: <%=v.getAgeId().getAge()%></div>
-        <div class="post-item">Salary:<%=v.getSalary()%></div>
+        <div class="post-item">Salary: <%=v.getSalary()%></div>
         <div class="post-item">Phone: <%=v.getCompanyId().getPhone()%></div>
-        <div class="post-item">Email:<a href="mailto:<%=v.getCompanyId().getEmail()%>"><%=v.getCompanyId().getEmail()%></a></div>
+        <div class="post-item">Email: <a href="mailto:<%=v.getCompanyId().getEmail()%>"><%=v.getCompanyId().getEmail()%></a></div>
         <div class="post-item">Education: <%=v.getEducationId().getEducation()%></div>
         <%
             String pattern = "MMMM dd, yyyy";

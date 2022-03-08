@@ -1,10 +1,8 @@
 package az.ekadr.servlet;
-
 import az.ekadr.dao.impl.*;
 import az.ekadr.entites.Company;
 import az.ekadr.entites.Vacancy;
 import lombok.SneakyThrows;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

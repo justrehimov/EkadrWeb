@@ -77,8 +77,8 @@
                   <%
                     String pattern = "MMMM dd, yyyy";
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                    String expdate = simpleDateFormat.format(v.getDataDate());
-                    String postdate = simpleDateFormat.format(v.getExpDate());
+                    String expdate = simpleDateFormat.format(v.getExpDate());
+                    String postdate = simpleDateFormat.format(v.getDataDate());
                   %>
                   <p class="card-text text-left" >Post Date:<span style="color: #0EBBDA;"><%=postdate%></span></p>
                   <p class="card-text text-left" >Exp Date:<span style="color: #0EBBDA;"><%=expdate%></span></p>

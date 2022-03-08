@@ -8,6 +8,7 @@
 <%
     Company company = (Company) session.getAttribute("company");
     Long vacancyId = Long.valueOf(request.getParameter("postId"));
+    if(vacancyId==null){response.sendRedirect("error.jsp");}
     VacancyDaoImpl vdi = new VacancyDaoImpl();
     Vacancy v = vdi.getVacancyById(vacancyId);
     String login = "display:inline !important;";
@@ -119,15 +120,15 @@
 <div class="content">
     <h1><%=v.getVacancyName()%></h1>
     <div class="post-header">
-        <div class="post-item">City:<%=v.getCompanyId().getCityId().getCity()%></div>
+        <div class="post-item">City: <%=v.getCompanyId().getCityId().getCity()%></div>
         <div class="post-item">Work mode: <%=v.getWorkmodeId().getWorkmode()%></div>
         <div class="post-item">Experience: <%=v.getExperienceId().getExperience()%></div>
         <div class="post-item">Category: <%=v.getCategoryId().getCategory()%></div>
         <div class="post-item">Company: <%=v.getCompanyId().getCompanyName()%></div>
         <div class="post-item">Age: <%=v.getAgeId().getAge()%></div>
-        <div class="post-item">Salary:<%=v.getSalary()%></div>
+        <div class="post-item">Salary: <%=v.getSalary()%></div>
         <div class="post-item">Phone: <%=v.getCompanyId().getPhone()%></div>
-        <div class="post-item">Email:<a href="mailto:<%=v.getCompanyId().getEmail()%>"><%=v.getCompanyId().getEmail()%></a></div>
+        <div class="post-item">Email: <a href="mailto:<%=v.getCompanyId().getEmail()%>"><%=v.getCompanyId().getEmail()%></a></div>
         <div class="post-item">Education: <%=v.getEducationId().getEducation()%></div>
         <%
             String pattern = "MMMM dd, yyyy";

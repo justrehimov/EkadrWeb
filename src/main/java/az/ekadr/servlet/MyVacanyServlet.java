@@ -29,7 +29,7 @@ public class MyVacanyServlet extends HttpServlet {
             Company c = new CompanyDaoImpl().getCompanyById(company.getId());
             session.setAttribute("company",c);
             session.setAttribute("vacancies",vacancyList);
-            resp.sendRedirect("myvacancies.jsp");
+            getServletContext().getRequestDispatcher("/myvacancies.jsp").forward(req,resp);
         }
         else{
             resp.sendRedirect("/login");

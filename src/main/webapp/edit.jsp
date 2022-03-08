@@ -203,7 +203,7 @@
     var myeditor2;
     ClassicEditor
         .create( document.querySelector( '#editor' ),{
-            toolbar: [ 'bold','link','bulletedList','undo', 'redo' ]
+            toolbar: [ 'bold','italic','|','bulletedList','|','link','undo', 'redo' ]
         } )
         .then( editor => {
             myeditor = editor;
@@ -215,7 +215,7 @@
         } );
     ClassicEditor
         .create( document.querySelector( '#editor2' ),{
-            toolbar: [ 'bold','link','bulletedList','undo', 'redo' ]
+            toolbar: [ 'bold','italic','|','bulletedList','|','link','undo', 'redo' ]
         })
         .then( editor2 => {
             myeditor2 = editor2;

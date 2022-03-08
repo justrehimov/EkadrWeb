@@ -112,7 +112,6 @@
         </div>
     </div>
 </div>
-
 <div class="content">
     <header class="header">
         <h1>Professional business world</h1>
